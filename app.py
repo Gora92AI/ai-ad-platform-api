@@ -36,11 +36,17 @@ def home():
 
 @app.route('/generate_ad_copy', methods=['POST'])
 def generate_ad_copy():
+    if request.method != 'POST':
+        return jsonify({"error": "Method not allowed, use POST."}), 405
+
     data = request.json
+    if not all (k in data for k in ("business", "audience", "goal")):
+        return jsonify({"error": "Missing required fields"}), 400
+
     prompt = f"Write 3 Facebook ad headlines and 2 descriptions for {data['business']} targeting {data['audience']} to accomplish {data['goal']}."
 
     response = client.chat.completions.create(
-        model="gpt-3.5-turbo",  # Or "gpt-4" if your key has access
+        model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "You are a helpful ad copy generator."},
             {"role": "user", "content": prompt}
@@ -75,4 +81,6 @@ def get_campaigns():
     return jsonify(output)
 
 if __name__ == "__main__":
-    app.run()
+    # Use 0.0.0.0 for all interfaces, pick up port from env (Render, Heroku, etc)
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
