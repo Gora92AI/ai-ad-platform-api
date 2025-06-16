@@ -81,11 +81,8 @@ def get_campaigns():
     return jsonify(output)
 
 if __name__ == "__main__":
-<<<<<<< HEAD
     # Use 0.0.0.0 for all interfaces, pick up port from env (Render, Heroku, etc)
     port = int(os.environ.get("PORT", 10000))
     app.run(host="0.0.0.0", port=port)
-=======
     port = int(os.environ.get("PORT", 10000))  # Use the port Render provides, or default to 10000
     app.run(host="0.0.0.0", port=port)
->>>>>>> 4db044c17113c823cc2f0053e96eec3360d90ce5
