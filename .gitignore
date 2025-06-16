@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.pyc
+
+# Firebase Admin Key
+firebase-adminsdk.json
+
+# Env vars
+.env
+
+# OS junk
+.DS_Store
+Thumbs.db
